@@ -17,10 +17,13 @@ let speedY = 7
 //bar parameters
 let windowHeightBar = 10
 let windowWidthBar = 100
-let xBar = 0
+let xBar
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
+
+    // bar start
+    xBar = windowWidth/2 - windowWidthBar/2
 
     //ball start
     xBall = random(sizeBall/2,windowWidth-sizeBall/2)
@@ -49,14 +52,14 @@ function draw() {
     text('Level: '+level, 5, 60)
     pop()
 
-    //bar move
-    if (mouseX < windowWidthBar/2){
-        xBar = 0
-    } else if (mouseX > windowWidth - windowWidthBar/2){
-        xBar = windowWidth - windowWidthBar
-    } else {
-        xBar = mouseX - windowWidthBar/2
+    //bar move by arrow-keys
+    if (keyIsDown(LEFT_ARROW) && xBar > 0) {
+        xBar -= 10
     }
+    if (keyIsDown(RIGHT_ARROW) && xBar < windowWidth - windowWidthBar) {
+        xBar += 10
+    }
+
     fill(255)
     rect(xBar, windowHeight - windowHeightBar, windowWidthBar, windowHeightBar)
 
@@ -72,8 +75,8 @@ function draw() {
     }
     //ball hits the bar, yay!
     if (yBall > windowHeight - (sizeBall/2 + windowHeightBar) 
-        && xBall > mouseX - windowWidthBar/2 
-        && xBall < mouseX + windowWidthBar/2){
+        && xBall > xBar 
+        && xBall < xBar + windowWidthBar){
             speedY = -speedY
 
             //increase score and speed. but only if game is on.
