@@ -17,3 +17,17 @@ class Brick {
         pop()
     }
 }
+
+
+class Ball {
+    constructor(posX,posY,d) {
+        this.x = posX
+        this.y = posY
+        this.d = d
+        this.r = d/2
+    }
+
+    moveBall() {
+        
+    }
+}

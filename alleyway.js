@@ -77,6 +77,6 @@ function draw() {
     drawBall()
 
     //draq Bricks
-    drawBricks()
+    // drawBricks()
 
 }
