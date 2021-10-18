@@ -23,7 +23,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
 
     //ball start
-    xBall = Math.floor(Math.random() * windowWidth) + sizeBall;
+    xBall = random(sizeBall/2,windowWidth-sizeBall/2)
     yBall = sizeBall
 
     //score (text) parameters go here. size, position, font...
@@ -41,7 +41,6 @@ function draw() {
     if (!gameOn) {
         text('GAME OVER', windowWidth/2, 130)
     }
-    //idea: we could use the same thing to display some 'LEVEL UP' stuff.
 
     //temporary placement of level counter.
     push()
@@ -61,10 +60,6 @@ function draw() {
     fill(255)
     rect(xBar, windowHeight - windowHeightBar, windowWidthBar, windowHeightBar)
 
-    //speed acceleration
-    //idea: maybe we could increase the speed on each successful hit? Not on frameCount.
-    //or maybe some levels. i added the vars already, but didn't implement it here yet.
-    //we should figure out the speed thing first! >> Yes good idea!
 
     //ball movements
     //ball hits left/right wall
@@ -80,26 +75,20 @@ function draw() {
         && xBall > mouseX - windowWidthBar/2 
         && xBall < mouseX + windowWidthBar/2){
             speedY = -speedY
-            //increase score. but only if game is on.
+
+            //increase score and speed. but only if game is on.
             if (gameOn) {
                 score ++
-            }
-            //increase level after every 5 or so successful hits. We can use this for the speed increase.
-            //put in 2 now, because of our speed problem. to test.
-            if (score % 4 == 0) {
-                if (gameOn) {
+
+                //increase level after every 5 successful hits. and increase speed.
+                if (score % 5 == 0) {
                     level++
-                }
-                //speed up > only 6 levels
-                if (level<7){
+
+                    //speed acceleration
                     speedY += speedY*0.1
                 }
             }
     }
-
-    //i think the problem with the 'fail' at high speed has something to do with the step/speed-size.
-    //i can't quite figure it out. but we somehow need to check collision in advance...
-    //or add some buffer, to account for bar height and speed... I dont know why but now it roks for me!!
 
     //fail!
     if (yBall > windowHeight - sizeBall/2){
